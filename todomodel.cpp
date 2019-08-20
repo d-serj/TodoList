@@ -55,6 +55,7 @@ Qt::ItemFlags TodoModel::flags(const QModelIndex &index) const
 QHash<int, QByteArray> TodoModel::roleNames() const
 {
   QHash<int, QByteArray> names;
+
   names[eDoneRole]        = "done";
   names[eDescriptionRole] = "description";
 
