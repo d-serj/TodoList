@@ -21,15 +21,15 @@ public:
   bool setItemAt(int index, const ToDoItem &item);
 
 signals:
-  void preItemAppended();
-  void postItemAppended();
+  void preItemAppended(void);
+  void postItemAppended(void);
 
   void preItemRemoved(int index);
-  void postItemRemoved();
+  void postItemRemoved(void);
 
 public slots:
-  void appendItem();
-  void removeCompletedItems();
+  void appendItem(void);
+  void removeCompletedItems(void);
 
 private:
   QVector<ToDoItem> mItems;
