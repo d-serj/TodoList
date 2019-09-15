@@ -3,9 +3,12 @@
 
 #include <QAbstractListModel>
 
+class ToDoList;
+
 class TodoModel : public QAbstractListModel
 {
   Q_OBJECT
+  Q_PROPERTY(ToDoList *list READ list WRITE setList)
 
 public:
   explicit TodoModel(QObject *parent = nullptr);
@@ -29,7 +32,11 @@ public:
 
   QHash<int, QByteArray> roleNames() const override;
 
+  ToDoList *list() const;
+  void setList(ToDoList *list);
+
 private:
+  ToDoList *mList;
 };
 
 #endif // TODOMODEL_H

@@ -1,7 +1,10 @@
 #include "todomodel.h"
 
+#include "todolist.h"
+
 TodoModel::TodoModel(QObject *parent)
   : QAbstractListModel(parent)
+  , mList(nullptr)
 {
 }
 
@@ -60,4 +63,40 @@ QHash<int, QByteArray> TodoModel::roleNames() const
   names[eDescriptionRole] = "description";
 
   return names;
+}
+
+ToDoList *TodoModel::list() const
+{
+  return mList;
+}
+
+void TodoModel::setList(ToDoList *list)
+{
+  beginResetModel();
+
+  if (mList)
+  {
+    mList->disconnect(this);
+  }
+
+  mList = list;
+
+  if (mList)
+  {
+    connect(mList, &ToDoList::preItemAppended, this, [=]()
+    {
+      const int index = mList->items().size();
+      beginInsertRows(QModelIndex(), index, index);
+    });
+
+    connect(mList, &ToDoList::postItemAppended, this, [=]()
+    {
+      endInsertRows();
+    });
+
+    connect(mList, &ToDoList::postItemRemoved, this, [=](int index)
+    {
+      beginRemoveRows(QModelIndex(), index, index);
+    });
+  }
 }

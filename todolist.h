@@ -13,6 +13,7 @@ struct ToDoItem
 class ToDoList : public QObject
 {
   Q_OBJECT
+
 public:
   explicit ToDoList(QObject *parent = nullptr);
 
